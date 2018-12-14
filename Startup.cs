@@ -28,7 +28,7 @@ namespace ECommerce
         {
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
 
             services.AddDbContext<ECommerceContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
 
@@ -42,21 +42,10 @@ namespace ECommerce
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
 
             app.UseStaticFiles();
             app.UseSession();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }
