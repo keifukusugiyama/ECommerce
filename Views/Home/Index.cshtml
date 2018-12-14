@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "The Store Main Page";
+}
+
+<h1>Welcome to the store!</h1>
+
+<div>
+    <h3>Some of our Products</h3>
+    @{
+        foreach (Product prod in @ViewBag.allProducts)
+        {
+        <div class="each_product">
+            <img class="prodimg" src="@prod.ImageURL">
+            <p>@prod.Name</p>
+            <p>@prod.Quantity left</p>
+        </div>
+        }
+    }
+    <br>
+    <a href="/products">More...</a>
+</div>
+
+<div>
+    <h3>Recent Orders</h3>
+    @{
+        foreach (Order ord in @ViewBag.allOrders)
+        {
+        <p>@ord.Customer.Name purchased @ord.Quantity @ord.Product.Name
+            @(@DateTime.Today.Date - @ord.CreatedAt.Date) Days 
+            @(@DateTime.Today.Hour - @ord.CreatedAt.Hour) Hours 
+            @(@DateTime.Today.Minute - @ord.CreatedAt.Minute) Min ago
+            </p>
+        }
+    }
+    <a href="/orders">More.. </a>
+</div>
+
+<div>
+    <h3>New customers</h3>
+    @{
+        foreach (Customer cust in @ViewBag.allCustomers)
+        {
+        <p>@cust.Name Joined at
+            @(@DateTime.Today.Date - @cust.CreatedAt.Date) Days 
+            @(@DateTime.Today.Hour - @cust.CreatedAt.Hour) Hours 
+            @(@DateTime.Today.Minute - @cust.CreatedAt.Minute) Min ago
+
+        </p>
+        }
+    }
+    <a href="/customers">More...</a>
+</div>

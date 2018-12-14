@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Products";
+}
+<h1>Products</h1>
+
+<div class="left_bar">
+    <form action="/products/search" method="post">
+        <input type="text" name="keyword" placeholder="Search...">
+        <button type="submit">Filter</button>
+    </form>
+
+
+    @model Product
+    <div class="form">
+        <h3>Add a new Product</h3>
+        <form asp-action="newProduct" asp-controller="Products" method="post">
+
+            <label asp-for="Name">Name:</label>
+            <input asp-for="Name">
+
+            <label asp-for="ImageURL">URL for Image:</label>
+            <input asp-for="ImageURL">
+
+            <label asp-for="Description">Description:</label>
+            <textarea asp-for="Description"></textarea>
+
+            <label asp-for="Quantity">Initial Quantity:</label>
+            <input asp-for="Quantity">
+            <br>
+            <button type="submit">Create</button>
+        </form>
+    </div>
+
+</div>
+
+<div class="main_list">
+    @{
+        foreach (Product prod in ViewBag.allProducts)
+        {
+        <div class="each_product">
+            <img class="prodimg" src="@prod.ImageURL">
+            <p>@prod.Name</p>
+            <p>@prod.Quantity left</p>
+        </div>
+        }
+    }
+</div>

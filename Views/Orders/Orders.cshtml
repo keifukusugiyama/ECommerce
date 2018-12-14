@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "Orders";
+}
+<h1>Orders</h1>
+
+@model Order
+<div class="form">
+    <h3>Add a new order</h3>
+    <form asp-action="newOrder" asp-controller="Orders" method="post">
+        <label asp-for="CustomerId">Customer: </label>
+        <select asp-for="CustomerId">
+        @{
+            foreach (Customer cust in ViewBag.allCustomers)
+                { 
+                    <option value="@cust.CustomerId">@cust.Name</option>
+                }
+        }
+        </select>
+        <br>
+        <label asp-for="ProductId">ProductId:</label>
+        <select asp-for="ProductId">
+        @{
+            foreach (Product prod in ViewBag.allProducts)
+                { 
+                    <option value="@prod.ProductId">@prod.Name</option>
+                }
+        }
+        </select>
+        
+        <label asp-for="Quantity">Quantity:</label>
+        <input asp-for="Quantity">
+        <br>
+        <button type="submit">Order</button>
+    </form>
+</div>
+
+
+<form action="/orders/search" method="post">
+    <input type="text" name="keyword" placeholder="Search...">
+    <button type="submit">Filter</button>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Customer Name</th>
+            <th scope="col" >Product</th> 
+            <th scope="col">Quantity</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (Order ord in ViewBag.allOrders)
+        {
+        <tr>
+            <td>@ord.Customer.Name</td>
+            <td>@ord.Product.Name</td>
+            <td>@ord.Quantity</td>
+            <td>@ord.CreatedAt</td>
+        </tr>
+        }
+    }
+            
+    </tbody>
+</table>
